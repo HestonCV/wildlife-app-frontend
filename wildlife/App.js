@@ -57,17 +57,27 @@ export default function App() {
   const NavBar = () => {
     return (
       <View style={styles.navBar}>
-        <Ionicons name="home-outline" size={40} color="white" />
-        <Ionicons name="images-outline" size={40} color="white" />
-        <Ionicons name="settings-outline" size={40} color="white" />
+        <View style={[styles.navBarItem, { borderLeftWidth: 0 }]}>
+          <Ionicons name="home-outline" size={35} color="white" />
+        </View>
+        <View style={styles.navBarItem}>
+          <Ionicons name="images-outline" size={35} color="white" />
+        </View>
+        <View style={[styles.navBarItem, { borderRightWidth: 0 }]}>
+          <Ionicons name="settings-outline" size={35} color="white" />
+        </View>
       </View>
     );
   };
 
   return (
-    <>
-      <SafeAreaView style={styles.topBarContainer}>
-        <View style={styles.topBar}>
+    <View style={{ backgroundColor: LIGHT_GREY, height: "100%" }}>
+      <SafeAreaView style={styles.statusBar}></SafeAreaView>
+      <View style={styles.topBar}>
+        <View>
+          <Ionicons name="logo-amplify" size={35} color="white" />
+        </View>
+        <View style={styles.topBarRight}>
           <Ionicons
             name="notifications"
             size={28}
@@ -76,7 +86,7 @@ export default function App() {
           />
           <Ionicons name="person-circle" size={30} color="white" />
         </View>
-      </SafeAreaView>
+      </View>
       <ScrollView
         alwaysBounceHorizontal={false}
         horizontal={false}
@@ -90,7 +100,7 @@ export default function App() {
         ))}
       </ScrollView>
       <NavBar />
-    </>
+    </View>
   );
 }
 
@@ -99,18 +109,26 @@ import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
-  topBarContainer: {
+  statusBar: {
     backgroundColor: PALE_BLUE,
-    alignItems: "center",
   },
   topBar: {
     backgroundColor: DARK_GREY,
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingRight: 15,
+    paddingRight: 20,
+    paddingLeft: 20,
     height: 50,
     width: "100%",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.7,
+    shadowRadius: 1,
+    marginBottom: 1,
+  },
+  topBarRight: {
+    flexDirection: "row",
   },
   notifications: {
     marginRight: 12,
@@ -150,13 +168,22 @@ const styles = StyleSheet.create({
   },
   navBar: {
     flexDirection: "row",
-    height: 100,
+    height: 75,
     width: "100%",
     paddingBottom: 15,
     alignItems: "center",
     justifyContent: "space-around",
     backgroundColor: GREEN,
-    borderTopWidth: 3,
+    borderTopWidth: 2,
     borderColor: "white",
+  },
+  navBarItem: {
+    height: "85%",
+    flex: 1,
+    borderColor: "white",
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
