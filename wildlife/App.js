@@ -5,62 +5,115 @@ import {
   View,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 
 import React, { useState, useEffect } from "react";
 
 export default function App() {
-  const [imageURL, setImageURL] = useState(null);
-  const [reload, setReload] = useState(false);
+  const [images, setImages] = useState([]);
 
   const fetchData = () => {
-    fetch("http://192.168.1.145:5000/image")
-      .then((response) => {
-        setImageURL(response.url);
+    fetch("http://192.168.1.145:5000/images")
+      .then((response) => response.json())
+      .then((data) => {
+        setImages(data);
       })
       .catch((error) => console.error(error));
-    console.log("test");
   };
 
   useEffect(() => {
     fetchData();
-  }, [reload]);
+  }, []);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      {imageURL && <Image source={{ uri: imageURL }} style={styles.image} />}
-      {/*       <Button
+  /*   const ReloadButton = () => {
+    return (
+      <Button
         title="Reload"
         onPress={() => {
           fetchData();
-          setReload(!reload);
         }}
-      /> */}
+      />
+    );
+  }; */
+
+  const ImageDisplay = (props) => {
+    const { classification, date, url, camera } = props;
+    console.log(url);
+    return (
+      <>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: url }} style={styles.image} />
+        </View>
+        <Text style={styles.imageDescription}>
+          {date} -- {classification} -- {camera}
+        </Text>
+      </>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topBar}></View>
+      <ScrollView
+        alwaysBounceHorizontal={false}
+        horizontal={false}
+        style={styles.scrollView}
+      >
+        {images.map(({ key, ...rest }) => (
+          <ImageDisplay key={key} {...rest} />
+        ))}
+      </ScrollView>
+      {/* <ReloadButton /> */}
     </SafeAreaView>
   );
 }
 
+import { Dimensions } from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#97B9C8",
+    flex: 1,
+    backgroundColor: "#8196A5",
     height: "100%",
     alignItems: "center",
-    justifyContent: "center",
   },
-  topView: {
-    height: "30%",
-    justifyContent: "flex-end",
-    alignItems: "center",
+  topBar: {
+    backgroundColor: "#626262",
+    height: 50,
+    width: "100%",
   },
-  loginText: {
+  scrollView: {
+    width: screenWidth,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flex: 1,
+    backgroundColor: "#8D8D8D",
+  },
+  text: {
     fontSize: 20,
+    color: "black",
   },
-  buttonContainer: {
-    paddingTop: 50,
+  imageContainer: {
+    marginTop: 20,
+    backgroundColor: "#3C3C3C",
+    padding: 15,
+    borderRadius: "5%",
+    width: "100%",
   },
-  loginButton: {},
   image: {
-    width: 400,
-    height: 400,
+    flex: 1,
+    width: "100%",
+    height: 250,
+    resizeMode: "contain",
+  },
+  imageDescription: {
+    marginTop: 5,
+    marginBottom: 30,
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
