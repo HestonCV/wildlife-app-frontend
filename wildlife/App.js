@@ -6,15 +6,23 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 
 import React, { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
+
+const PALE_BLUE = "#8196A5";
+const LIGHT_GREY = "#8D8D8D";
+const DARK_GREY = "#626262";
+const GREEN = "#969A86";
 
 export default function App() {
   const [images, setImages] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = () => {
-    fetch("http://192.168.1.145:5000/images")
+    return fetch("http://192.168.1.145:5000/images")
       .then((response) => response.json())
       .then((data) => {
         setImages(data);
@@ -26,20 +34,14 @@ export default function App() {
     fetchData();
   }, []);
 
-  /*   const ReloadButton = () => {
-    return (
-      <Button
-        title="Reload"
-        onPress={() => {
-          fetchData();
-        }}
-      />
-    );
-  }; */
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
+  };
 
   const ImageDisplay = (props) => {
     const { classification, date, url, camera } = props;
-    console.log(url);
     return (
       <>
         <View style={styles.imageContainer}>
@@ -52,20 +54,43 @@ export default function App() {
     );
   };
 
+  const NavBar = () => {
+    return (
+      <View style={styles.navBar}>
+        <Ionicons name="home-outline" size={40} color="white" />
+        <Ionicons name="images-outline" size={40} color="white" />
+        <Ionicons name="settings-outline" size={40} color="white" />
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topBar}></View>
+    <>
+      <SafeAreaView style={styles.topBarContainer}>
+        <View style={styles.topBar}>
+          <Ionicons
+            name="notifications"
+            size={28}
+            color="white"
+            style={styles.notifications}
+          />
+          <Ionicons name="person-circle" size={30} color="white" />
+        </View>
+      </SafeAreaView>
       <ScrollView
         alwaysBounceHorizontal={false}
         horizontal={false}
         style={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         {images.map(({ key, ...rest }) => (
           <ImageDisplay key={key} {...rest} />
         ))}
       </ScrollView>
-      {/* <ReloadButton /> */}
-    </SafeAreaView>
+      <NavBar />
+    </>
   );
 }
 
@@ -74,40 +99,47 @@ import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#8196A5",
-    height: "100%",
+  topBarContainer: {
+    backgroundColor: PALE_BLUE,
     alignItems: "center",
   },
   topBar: {
-    backgroundColor: "#626262",
+    backgroundColor: DARK_GREY,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: 15,
     height: 50,
     width: "100%",
   },
+  notifications: {
+    marginRight: 12,
+  },
   scrollView: {
     width: screenWidth,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 45,
+    paddingRight: 45,
     flex: 1,
-    backgroundColor: "#8D8D8D",
+    backgroundColor: LIGHT_GREY,
   },
   text: {
     fontSize: 20,
     color: "black",
   },
   imageContainer: {
-    marginTop: 20,
-    backgroundColor: "#3C3C3C",
-    padding: 15,
-    borderRadius: "5%",
-    width: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    opacity: 1,
+    shadowColor: "black",
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   image: {
-    flex: 1,
     width: "100%",
-    height: 250,
-    resizeMode: "contain",
+    aspectRatio: 4 / 3,
+    marginTop: 20,
+    borderRadius: 10,
+    resizeMode: "cover",
   },
   imageDescription: {
     marginTop: 5,
@@ -115,5 +147,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     fontWeight: "bold",
+  },
+  navBar: {
+    flexDirection: "row",
+    height: 100,
+    width: "100%",
+    paddingBottom: 15,
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: GREEN,
+    borderTopWidth: 3,
+    borderColor: "white",
   },
 });
