@@ -25,6 +25,7 @@ export default function App() {
     return fetch("http://192.168.1.145:5000/images")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setImages(data);
       })
       .catch((error) => console.error(error));
@@ -95,8 +96,8 @@ export default function App() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {images.map(({ key, ...rest }) => (
-          <ImageDisplay key={key} {...rest} />
+        {images.map((image) => (
+          <ImageDisplay key={image.id} {...image} />
         ))}
       </ScrollView>
       <NavBar />
@@ -147,10 +148,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     backgroundColor: "rgba(255, 255, 255, 0)",
     opacity: 1,
-    shadowColor: "black",
+    /*     shadowColor: "black",
     shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
+    shadowOpacity: 0.6,
+    shadowRadius: 2, */
   },
   image: {
     width: "100%",
@@ -158,9 +159,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     resizeMode: "cover",
+    borderWidth: 4,
+    borderColor: DARK_GREY,
   },
   imageDescription: {
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 30,
     color: "white",
     fontSize: 15,
