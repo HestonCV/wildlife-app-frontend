@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { DARK_GREY } from "../../constants/colors";
+import { DARKER_GREY } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     resizeMode: "cover",
-    borderWidth: 4,
-    borderColor: DARK_GREY,
+    borderWidth: 5,
+    borderColor: DARKER_GREY,
   },
   imageDescription: {
     marginTop: 10,

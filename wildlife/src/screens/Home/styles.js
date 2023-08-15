@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
+import { PALE_BLUE, LIGHT_GREY } from "../../constants/colors";
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({

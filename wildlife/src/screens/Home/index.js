@@ -1,9 +1,8 @@
 import { View, SafeAreaView, ScrollView, RefreshControl } from "react-native";
 import React, { useState, useEffect } from "react";
 
-import ImageDisplay from "./src/components/ImageDisplay/index.js";
-import NavBar from "./src/components/NavBar/index.js";
-import TopBar from "./src/components/TopBar/index.js";
+import ImageDisplay from "../../components/ImageDisplay/index.js";
+import TopBar from "../../components/TopBar/index.js";
 import styles from "./styles.js";
 
 const Home = () => {
@@ -43,7 +42,6 @@ const Home = () => {
           <ImageDisplay key={image.id} {...image} />
         ))}
       </ScrollView>
-      <NavBar />
     </View>
   );
 };

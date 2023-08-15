@@ -1,19 +1,34 @@
-import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
 const NavBar = () => {
+  const navigation = useNavigation();
+
+  const navigateTo = (screenName) => {
+    navigation.navigate(screenName);
+  };
   return (
     <View style={styles.navBar}>
-      <View style={[styles.navBarItem, { borderLeftWidth: 0 }]}>
+      <TouchableOpacity
+        onPress={() => navigateTo("Home")}
+        style={[styles.navBarItem, { borderLeftWidth: 0 }]}
+      >
         <Ionicons name="home-outline" size={35} color="white" />
-      </View>
-      <View style={styles.navBarItem}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Images")}
+        style={styles.navBarItem}
+      >
         <Ionicons name="images-outline" size={35} color="white" />
-      </View>
-      <View style={[styles.navBarItem, { borderRightWidth: 0 }]}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Settings")}
+        style={[styles.navBarItem, { borderRightWidth: 0 }]}
+      >
         <Ionicons name="settings-outline" size={35} color="white" />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
