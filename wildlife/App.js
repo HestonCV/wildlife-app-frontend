@@ -15,12 +15,13 @@ export default function App() {
       <Tab.Navigator
         tabBar={() => <NavBar />}
         screenOptions={{
+          headerShown: false,
           headerStyle: {
-            backgroundColor: GREEN,
+            backgroundColor: "white",
           },
-          headerTintColor: "white",
+          headerTintColor: "black",
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: "600",
           },
         }}
       >

@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 
-import { GREEN } from "../../constants/colors";
+import {
+  DARK_GREY,
+  DARKER_GREY,
+  GREEN,
+  LIGHT_GREY,
+} from "../../constants/colors";
 
 const styles = StyleSheet.create({
   navBar: {
@@ -10,16 +15,16 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: GREEN,
+    backgroundColor: DARKER_GREY,
     borderTopWidth: 2,
-    borderColor: "white",
+    borderColor: DARK_GREY,
   },
   navBarItem: {
     height: "85%",
     flex: 1,
-    borderColor: "white",
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
+    borderColor: LIGHT_GREY,
+    /*     borderLeftWidth: 1,
+    borderRightWidth: 1, */
     justifyContent: "center",
     alignItems: "center",
   },

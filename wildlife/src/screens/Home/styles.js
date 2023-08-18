@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
-import { PALE_BLUE, LIGHT_GREY } from "../../constants/colors";
+import { PALE_BLUE, LIGHT_GREY, DARKER_GREY } from "../../constants/colors";
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
@@ -9,14 +9,15 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   statusBar: {
-    backgroundColor: PALE_BLUE,
+    backgroundColor: DARKER_GREY,
   },
   scrollView: {
     width: screenWidth,
-    paddingLeft: 45,
-    paddingRight: 45,
+    paddingLeft: 10,
+    paddingRight: 10,
     flex: 1,
-    backgroundColor: LIGHT_GREY,
+    flexDirection: "column",
+    backgroundColor: DARKER_GREY,
   },
   text: {
     fontSize: 20,

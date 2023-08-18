@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { DARK_GREY } from "../../constants/colors";
+import { DARK_GREY, DARKER_GREY, PALE_BLUE } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: DARK_GREY,
+    backgroundColor: "#1B1B1B",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -11,13 +11,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     height: 50,
     width: "100%",
-    borderTopWidth: 1,
-    borderTopColor: "white",
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.7,
-    shadowRadius: 1,
-    marginBottom: 1,
   },
   topBarRight: {
     flexDirection: "row",

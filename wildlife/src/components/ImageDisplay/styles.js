@@ -1,11 +1,15 @@
 import { StyleSheet } from "react-native";
-import { DARKER_GREY } from "../../constants/colors";
+import { DARKER_GREY, DARK_GREY } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   imageContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0)",
     opacity: 1,
-    /*     shadowColor: "black",
+    /*     padding: 10, */
+    paddingBottom: 0,
+    marginTop: 8,
+    backgroundColor: "#1B1B1B",
+    borderRadius: 2,
+    /*shadowColor: "black",
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.6,
     shadowRadius: 2, */
@@ -13,17 +17,17 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     aspectRatio: 4 / 3,
-    marginTop: 20,
-    borderRadius: 10,
+    borderRadius: 2,
     resizeMode: "cover",
-    borderWidth: 5,
-    borderColor: DARKER_GREY,
+    /*     borderWidth: 5,
+    borderColor: DARKER_GREY, */
   },
   imageDescription: {
-    marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 7,
+    marginTop: 7,
+    marginLeft: 7,
     color: "white",
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "bold",
   },
 });

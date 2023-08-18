@@ -8,10 +8,10 @@ const ImageDisplay = (props) => {
     <>
       <View style={styles.imageContainer}>
         <Image source={{ uri: url }} style={styles.image} />
+        <Text style={styles.imageDescription}>
+          {date} -- {classification}
+        </Text>
       </View>
-      <Text style={styles.imageDescription}>
-        {date} -- {classification} -- {camera}
-      </Text>
     </>
   );
 };
