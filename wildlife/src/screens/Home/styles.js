@@ -13,10 +13,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: screenWidth,
-    paddingLeft: 10,
-    paddingRight: 10,
-    flex: 1,
-    flexDirection: "column",
     backgroundColor: DARKER_GREY,
   },
   text: {

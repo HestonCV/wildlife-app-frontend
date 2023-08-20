@@ -6,12 +6,7 @@ const ImageDisplay = (props) => {
   console.log(url);
   return (
     <>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: url }} style={styles.image} />
-        <Text style={styles.imageDescription}>
-          {date} -- {classification}
-        </Text>
-      </View>
+      <Image source={{ uri: url }} style={styles.image} />
     </>
   );
 };

@@ -1,11 +1,17 @@
-import { View, SafeAreaView, ScrollView, RefreshControl } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 
 import ImageDisplay from "../../components/ImageDisplay/index.js";
 import TopBar from "../../components/TopBar/index.js";
 import styles from "./styles.js";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [images, setImages] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,9 +43,21 @@ const Home = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
+        contentContainerStyle={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
       >
         {images.map((image) => (
-          <ImageDisplay key={image.id} {...image} />
+          <TouchableOpacity
+            key={image.id}
+            onPress={() =>
+              navigation.navigate("ImageDetails", { imageId: image.id })
+            }
+          >
+            <ImageDisplay {...image} />
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
