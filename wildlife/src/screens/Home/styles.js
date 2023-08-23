@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: DARKER_GREY,
   },
   scrollView: {
+    position: "relative",
     width: screenWidth,
     backgroundColor: DARKER_GREY,
   },

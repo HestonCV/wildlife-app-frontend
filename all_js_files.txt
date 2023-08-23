@@ -1,0 +1,551 @@
+===== ./wildlife/src/screens/Camera/index.js =====
+import React from "react";
+import { View, Text } from "react-native";
+
+const Camera = () => {
+  return (
+    <View>
+      <Text>Camera Page</Text>
+    </View>
+  );
+};
+
+export default Camera;
+
+
+===== ./wildlife/src/screens/Camera/styles.js =====
+
+
+===== ./wildlife/src/screens/Settings/index.js =====
+import React from "react";
+import { View, Text } from "react-native";
+
+const Settings = () => {
+  return (
+    <View>
+      <Text>Settings Page</Text>
+    </View>
+  );
+};
+
+export default Settings;
+
+
+===== ./wildlife/src/screens/ImageDetails/index.js =====
+import React from "react";
+import { View, Text, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import styles from "./styles.js";
+
+const ImageDetails = ({ route }) => {
+  const { imageId } = route.params;
+
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <Text>ImageDetails Page</Text>
+      <Text>ImageId: {imageId}</Text>
+      <Button title="Back" onPress={() => navigation.pop()} />
+    </View>
+  );
+};
+
+export default ImageDetails;
+
+
+===== ./wildlife/src/screens/ImageDetails/styles.js =====
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/screens/Home/index.js =====
+import {
+  View,
+  SafeAreaView,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+
+import ImageDisplay from "../../components/ImageDisplay/index.js";
+import ImageGallery from "../../components/ImageGallery/index.js";
+import SelectButton from "../../components/SelectButton/index.js";
+import TopBar from "../../components/TopBar/index.js";
+import styles from "./styles.js";
+import SERVER_URL from "../../constants/serverURL.js";
+
+const Home = ({ navigation }) => {
+  const [images, setImages] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [selectionMode, setSelectionMode] = useState(false);
+
+  const fetchData = () => {
+    return fetch(`${SERVER_URL}/images`)
+      .then((response) => response.json())
+      .then((data) => setImages(data))
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
+  };
+
+  return (
+    <View style={styles.homeContainer}>
+      <SafeAreaView style={styles.statusBar}></SafeAreaView>
+      <TopBar />
+      <ScrollView
+        alwaysBounceHorizontal={false}
+        horizontal={false}
+        style={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        contentContainerStyle={{}}
+      >
+        <SelectButton
+          setSelectionMode={setSelectionMode}
+          selectionMode={selectionMode}
+        />
+        <ImageGallery
+          selectionMode={selectionMode}
+          images={images}
+          navigation={navigation}
+        />
+      </ScrollView>
+    </View>
+  );
+};
+
+{
+  /*         {images.map((image) => (
+          <TouchableOpacity
+            key={image.id}
+            onPress={() =>
+              navigation.navigate("ImageDetails", { imageId: image.id })
+            }
+          >
+            <ImageDisplay {...image} />
+          </TouchableOpacity>
+        ))} */
+}
+
+export default Home;
+
+
+===== ./wildlife/src/screens/Home/styles.js =====
+import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
+import { PALE_BLUE, LIGHT_GREY, DARKER_GREY } from "../../constants/colors";
+const screenWidth = Dimensions.get("window").width;
+
+const styles = StyleSheet.create({
+  homeContainer: {
+    backgroundColor: LIGHT_GREY,
+    height: "100%",
+  },
+  statusBar: {
+    backgroundColor: DARKER_GREY,
+  },
+  scrollView: {
+    position: "relative",
+    width: screenWidth,
+    backgroundColor: DARKER_GREY,
+  },
+  text: {
+    fontSize: 20,
+    color: "black",
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/screens/Share/index.js =====
+import React from "react";
+import { View, Text } from "react-native";
+
+const Share = () => {
+  return (
+    <View>
+      <Text>Share Page</Text>
+    </View>
+  );
+};
+
+export default Share;
+
+
+===== ./wildlife/src/screens/Share/styles.js =====
+
+
+===== ./wildlife/src/screens/Images/index.js =====
+import React from "react";
+import { View, Text } from "react-native";
+
+const Images = () => {
+  return (
+    <View>
+      <Text>Images Page</Text>
+    </View>
+  );
+};
+
+export default Images;
+
+
+===== ./wildlife/src/components/ImageDisplay/index.js =====
+import { View, Text, Image } from "react-native";
+import styles from "./styles";
+
+const ImageDisplay = (props) => {
+  const { classification, date, url, camera } = props;
+  console.log(url);
+  return (
+    <>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: url }} style={styles.image} />
+      </View>
+    </>
+  );
+};
+
+export default ImageDisplay;
+
+
+===== ./wildlife/src/components/ImageDisplay/styles.js =====
+import { StyleSheet } from "react-native";
+import { DARKER_GREY, DARK_GREY } from "../../constants/colors";
+
+import { Dimensions } from "react-native";
+
+screenWidth = Dimensions.get("window").width;
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    position: "relative",
+    backgroundColor: "white",
+  },
+  image: {
+    width: screenWidth / 2,
+    aspectRatio: 4 / 3,
+    borderRadius: 2,
+    resizeMode: "cover",
+    opacity: 0.6,
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/components/SelectButton/index.js =====
+import { View, Button } from "react-native";
+import styles from "./styles";
+
+const SelectButton = ({ selectionMode, setSelectionMode }) => {
+  <View style={styles.selectButtonContainer}>
+    {!selectionMode && (
+      <Button title="Select" onPress={() => setSelectionMode(True)} />
+    )}
+    {selectionMode && (
+      <Button title="Cancel" onPress={() => setSelectionMode(False)} />
+    )}
+  </View>;
+};
+
+export default SelectButton;
+
+
+===== ./wildlife/src/components/SelectButton/styles.js =====
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  selectButtonContainer: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    borderRadius: 10,
+    backgroundColor: "#1B1B1B",
+    opacity: 0.8,
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/components/NavBar/index.js =====
+import { useNavigation } from "@react-navigation/native";
+import { View, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "./styles";
+import { DARK_GREY, LIGHT_GREY } from "../../constants/colors";
+
+const NavBar = () => {
+  const navigation = useNavigation();
+
+  const navigateTo = (screenName) => {
+    navigation.navigate(screenName);
+  };
+  return (
+    <View style={styles.navBar}>
+      <TouchableOpacity
+        onPress={() => navigateTo("Home")}
+        style={[styles.navBarItem, { borderLeftWidth: 0 }]}
+      >
+        <Ionicons name="home-outline" size={30} color={LIGHT_GREY} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Camera")}
+        style={styles.navBarItem}
+      >
+        <Ionicons name="camera-outline" size={30} color={LIGHT_GREY} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Images")}
+        style={styles.navBarItem}
+      >
+        <Ionicons name="images-outline" size={34} color={LIGHT_GREY} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Share")}
+        style={styles.navBarItem}
+      >
+        <Ionicons name="share-outline" size={30} color={LIGHT_GREY} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigateTo("Settings")}
+        style={[styles.navBarItem, { borderRightWidth: 0 }]}
+      >
+        <Ionicons name="settings-outline" size={28} color={LIGHT_GREY} />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default NavBar;
+
+
+===== ./wildlife/src/components/NavBar/styles.js =====
+import { StyleSheet } from "react-native";
+
+import {
+  DARK_GREY,
+  DARKER_GREY,
+  GREEN,
+  LIGHT_GREY,
+} from "../../constants/colors";
+
+const styles = StyleSheet.create({
+  navBar: {
+    flexDirection: "row",
+    height: 75,
+    width: "100%",
+    paddingBottom: 15,
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: DARKER_GREY,
+    borderTopWidth: 2,
+    borderColor: DARK_GREY,
+  },
+  navBarItem: {
+    height: "85%",
+    flex: 1,
+    borderColor: LIGHT_GREY,
+    /*     borderLeftWidth: 1,
+    borderRightWidth: 1, */
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/components/ImageGallery/index.js =====
+import { useState } from "react";
+import { View, Image, TouchableOpacity, Button } from "react-native";
+import styles from "./styles";
+import SERVER_URL from "../../constants/serverURL";
+
+const ImageGallery = ({ selectionMode, images, navigation }) => {
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const toggleSelection = (image) => {
+    const isSelected = selectedImages.includes(image);
+    if (isSelected) {
+      setSelectedImages(selectedImages.filter((item) => item !== image));
+    } else {
+      setSelectedImages([...selectedImages, image]);
+    }
+  };
+
+  const handleImagePress = (image) => {
+    if (selectionMode) {
+      toggleSelection(image);
+    } else {
+      navigation.navigate("ImageDetails", { imageId: image.id });
+    }
+  };
+
+  const deleteImages = () => {
+    selectedImages.forEach((selectedImage) => {
+      fetch(`${SERVER_URL}/image/${selectedImage.id}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log(
+              `Image with id: ${selectedImage.id} deleted successfully`
+            );
+          } else {
+            console.log(`Failed to delete Image with id: ${selectedImage.id}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting image:", error);
+        });
+    });
+  };
+
+  return (
+    <View style={styles.imagesContainer}>
+      {images.map((image) => {
+        return (
+          <TouchableOpacity
+            key={image.id}
+            onPress={() => handleImagePress(image)}
+          >
+            <View style={styles.imageContainer}>
+              <Image
+                source={{ uri: image.url }}
+                style={[
+                  styles.image,
+                  selectedImages.includes(image) && styles.selectedImage,
+                ]}
+              />
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+      {/* <Button title="delete" onPress={() => deleteImages()} /> */}
+    </View>
+  );
+};
+
+export default ImageGallery;
+
+
+===== ./wildlife/src/components/ImageGallery/styles.js =====
+import { StyleSheet } from "react-native";
+import { DARKER_GREY, DARK_GREY } from "../../constants/colors";
+
+import { Dimensions } from "react-native";
+
+screenWidth = Dimensions.get("window").width;
+
+const styles = StyleSheet.create({
+  imagesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  imageContainer: {
+    position: "relative",
+    backgroundColor: "white",
+  },
+  image: {
+    width: screenWidth / 2,
+    aspectRatio: 4 / 3,
+    resizeMode: "cover",
+  },
+  selectedImage: {
+    opacity: 0.6,
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/components/TopBar/index.js =====
+import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "./styles";
+
+const TopBar = () => {
+  return (
+    <View style={styles.topBar}>
+      <View>
+        <Ionicons name="logo-amplify" size={35} color="white" />
+      </View>
+      <View style={styles.topBarRight}>
+        <Ionicons
+          name="notifications"
+          size={28}
+          color="white"
+          style={styles.notifications}
+        />
+        <Ionicons name="person-circle" size={30} color="white" />
+      </View>
+    </View>
+  );
+};
+
+export default TopBar;
+
+
+===== ./wildlife/src/components/TopBar/styles.js =====
+import { StyleSheet } from "react-native";
+import { DARK_GREY, DARKER_GREY, PALE_BLUE } from "../../constants/colors";
+
+const styles = StyleSheet.create({
+  topBar: {
+    backgroundColor: "#1B1B1B",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+    height: 50,
+    width: "100%",
+  },
+  topBarRight: {
+    flexDirection: "row",
+  },
+  notifications: {
+    marginRight: 12,
+  },
+});
+
+export default styles;
+
+
+===== ./wildlife/src/constants/colors.js =====
+export const PALE_BLUE = "#8196A5";
+export const LIGHT_GREY = "#8D8D8D";
+export const DARK_GREY = "#626262";
+export const DARKER_GREY = "#3C3C3C";
+export const GREEN = "#969A86";
+
+
+===== ./wildlife/src/constants/serverURL.js =====
+const SERVER_URL = "http://192.168.1.145:5000";
+export default SERVER_URL;
+
+

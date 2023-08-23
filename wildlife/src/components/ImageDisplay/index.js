@@ -6,7 +6,9 @@ const ImageDisplay = (props) => {
   console.log(url);
   return (
     <>
-      <Image source={{ uri: url }} style={styles.image} />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: url }} style={styles.image} />
+      </View>
     </>
   );
 };
