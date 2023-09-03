@@ -1,12 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
 
-const Camera = () => {
-  return (
-    <View>
-      <Text>Camera Page</Text>
-    </View>
-  );
-};
+const Camera = () => {};
 
 export default Camera;
