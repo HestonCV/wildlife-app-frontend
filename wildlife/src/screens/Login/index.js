@@ -1,13 +1,34 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, TextInput, View } from "react-native";
+import { Button, SafeAreaView, Text, TextInput, View } from "react-native";
+import tokenManager from "../../utils/TokenManager";
 import styles from "./styles";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // TODO:
+  const handleLogin = async () => {
+    console.log("button pressed");
+    const postData = { email, password };
+
+    const response = await fetch("http://192.168.1.140:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      // TODO: handle error
+    }
+
+    const data = await response.json();
+    const token = await data.data.access_token;
+    console.log(data);
+    await tokenManager.storeToken(token);
+    console.log(await tokenManager.getToken());
+    navigation.replace("Main");
   };
 
   return (
@@ -26,6 +47,7 @@ const Login = () => {
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
+        <Button title="Submit" onPress={handleLogin} />
       </View>
     </SafeAreaView>
   );

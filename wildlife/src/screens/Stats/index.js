@@ -4,7 +4,7 @@ import { SafeAreaView, Text } from "react-native";
 const Stats = () => {
   return (
     <SafeAreaView>
-      <Text>Register</Text>
+      <Text>Stats</Text>
     </SafeAreaView>
   );
 };

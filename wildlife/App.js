@@ -10,7 +10,10 @@ const App = () => {
   useEffect(() => {
     const fetchTokenAndValidate = async () => {
       try {
-        setIsAuthenticated(tokenManager.validateToken());
+        console.log(await tokenManager.getToken());
+        const isValid = await tokenManager.validateToken();
+        console.log("Is Valid:", isValid); // Debugging line
+        setIsAuthenticated(isValid);
       } catch (error) {
         console.log(error);
       }

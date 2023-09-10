@@ -4,16 +4,24 @@ import * as SecureStore from "expo-secure-store";
 class TokenManager {
   // stores token in secure storage
   async storeToken(token) {
-    await SecureStore.setItemAsync("user_token", token);
+    try {
+      await SecureStore.setItemAsync("user_token", token);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // return token from secure storage if it exists
   async getToken() {
-    const token = await SecureStore.getItemAsync("user_token");
-    if (token) {
-      return token;
-    } else {
-      return null;
+    try {
+      const token = await SecureStore.getItemAsync("user_token");
+      if (token) {
+        return token;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -24,17 +32,33 @@ class TokenManager {
 
   // if token exists in secure storage, send token to server to check validity
   async validateToken() {
-    const token = SecureStore.getItemAsync("user_token");
-    if (token) {
-      const response = await fetch("http://192.168.1.145:5000/validate_token", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      data = await response.json();
-      return response.data.authorization;
-    } else {
+    try {
+      const token = await SecureStore.getItemAsync("user_token");
+      if (token) {
+        const response = await fetch(
+          "http://192.168.1.140:5000/validate_token",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          console.log(`HTTP Error: ${response.status}`);
+          return false;
+        }
+
+        const data = await response.json();
+        console.log(`token manager validate token:`, data);
+        const authorized = data.data.authorized;
+        return authorized;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
       return false;
     }
   }
