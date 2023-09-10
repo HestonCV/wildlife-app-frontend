@@ -51,7 +51,6 @@ class TokenManager {
         }
 
         const data = await response.json();
-        console.log(`token manager validate token:`, data);
         const authorized = data.data.authorized;
         return authorized;
       } else {

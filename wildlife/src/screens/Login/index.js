@@ -25,9 +25,7 @@ const Login = ({ navigation }) => {
 
     const data = await response.json();
     const token = await data.data.access_token;
-    console.log(data);
     await tokenManager.storeToken(token);
-    console.log(await tokenManager.getToken());
     navigation.replace("Main");
   };
 
