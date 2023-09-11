@@ -45,7 +45,11 @@ const Login = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
-        <Button title="Submit" onPress={handleLogin} />
+        <Button title="Login" onPress={handleLogin} />
+        <Button
+          title="No account? Register"
+          onPress={() => navigation.push("Register")}
+        />
       </View>
     </SafeAreaView>
   );
