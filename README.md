@@ -6,6 +6,7 @@ The Wildlife App Frontend is a React Native application that serves as the user 
 
 ## Technologies Used
 
+- **JavaScript**: The main coding language used.
 - **React Native**: The framework used for building the mobile application.
 - **React Navigation**: Library used for navigation within the app.
 - **Expo**: Framework and platform for universal React applications.
