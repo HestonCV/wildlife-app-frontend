@@ -61,6 +61,13 @@ Below are some initial UI mockups designed in Figma to give an idea of the plann
 - **Capture Analytics**: The statistics page will offer in-depth insights into image capture metrics, including the frequency of captures and the prevalence of specific wildlife types. This feature aims to be particularly useful for research projects that involve many cameras.
 - **Graphics**: To enhance user understanding and engagement, the statistics page will also feature interactive charts and graphs. These visual aids will represent data such as capture frequency per camera, wildlife diversity, and other relevant metrics.
 
+## Challenges and Solutions
+
+### Challenge: Navigation
+
+- **Problem**: Creating an intuitive navigation system that allows users to easily access various features of the app.
+- **Solution**: Implemented a hybrid navigation system using both tab-based and stack-based navigation. Tab navigation is used for the main features of the app, while stack navigation is nested within each tab to handle more specific tasks and details.
+
 ## Contact
 
 Name - Heston Vaughan  
