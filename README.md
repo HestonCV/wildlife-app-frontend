@@ -72,4 +72,4 @@ Below are some initial UI mockups designed in Figma to give an idea of the plann
 
 Name - Heston Vaughan  
 Email - [heston.cv@gmail.com](mailto:heston.cv@gmail.com)  
-Project Link: [https://github.com/HestonCV/wildlife-app-server](https://github.com/HestonCV/wildlife-app-server)
+Project Link: [https://github.com/HestonCV/wildlife-app-frontend](https://github.com/HestonCV/wildlife-app-frontend)
