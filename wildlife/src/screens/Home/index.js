@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Button, Text } from "react-native";
+import { SafeAreaView, Button, Text, Image } from "react-native";
 import styles from "./styles";
 import tokenManager from "../../utils/TokenManager";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Home = ({ navigation }) => {
-  const [imageDetails, setImageDetails] = useState("");
+  const [imageDetails, setImageDetails] = useState([]);
+  const [imageBlobs, setImageBlobs] = useState([]);
 
   const goToImageDetails = () => {
     navigation.navigate("ImageDetails");
@@ -17,18 +19,41 @@ const Home = ({ navigation }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      return JSON.stringify(data);
+      const imageData = data.data.image_data;
+      setImageDetails(imageData);
+
+      const blobs = await Promise.all(
+        imageData.map(async (image) => {
+          const response = await fetch(
+            `http://192.168.1.140:5000/images/${image.id}/thumbnail`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          const blob = await response.blob();
+          return URL.createObjectURL(blob);
+        })
+      );
+      setImageBlobs(blobs);
     };
-    fetchData().then((dataAsString) => {
-      setImageDetails(dataAsString);
-    });
+    fetchData();
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Text>Home</Text>
       <Text onPress={goToImageDetails}>Image Details</Text>
-      <Text>{imageDetails}</Text>
+      <ScrollView>
+        {imageBlobs.map((blob, index) => {
+          return (
+            <Image
+              key={index}
+              source={{ uri: blob }}
+              style={{ width: 200, height: 200 }}
+            />
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 };

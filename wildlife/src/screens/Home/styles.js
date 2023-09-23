@@ -3,8 +3,11 @@ import { DARK_GREY } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: DARK_GREY,
     height: "100%",
+  },
+  scrollView: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });
 
