@@ -1,10 +1,19 @@
 import React from "react";
-import { SafeAreaView, Text } from "react-native";
+import { Button, SafeAreaView, Text } from "react-native";
+import tokenManager from "../../utils/TokenManager";
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
+  const handleLogout = async () => {
+    await tokenManager.removeToken();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
   return (
     <SafeAreaView>
       <Text>Settings</Text>
+      <Button title="Logout" onPress={handleLogout} />
     </SafeAreaView>
   );
 };

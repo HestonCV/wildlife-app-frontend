@@ -20,10 +20,12 @@ const Login = ({ navigation }) => {
     });
 
     if (!response.ok) {
-      // TODO: handle error
+      const data = await response.json();
+      console.log(JSON.stringify(data.message));
+      return;
     }
-
     const data = await response.json();
+    console.log(JSON.stringify(data.message));
     const token = await data.data.access_token;
     await tokenManager.storeToken(token);
     navigation.replace("Main");
