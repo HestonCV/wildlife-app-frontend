@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Button, Text, Image } from "react-native";
+import { SafeAreaView, Button, Text, Image, View } from "react-native";
 import styles from "./styles";
 import tokenManager from "../../utils/TokenManager";
 import { ScrollView } from "react-native-gesture-handler";
@@ -44,15 +44,19 @@ const Home = ({ navigation }) => {
       <Text>Home</Text>
       <Text onPress={goToImageDetails}>Image Details</Text>
       <ScrollView>
-        {imageBlobs.map((blob, index) => {
-          return (
-            <Image
-              key={index}
-              source={{ uri: blob }}
-              style={{ width: 200, height: 200 }}
-            />
-          );
-        })}
+        <View style={styles.imagesContainer}>
+          {imageBlobs.map((blob, index) => {
+            return (
+              <View style={styles.imageContainer}>
+                <Image
+                  key={index}
+                  source={{ uri: blob }}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </View>
+            );
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

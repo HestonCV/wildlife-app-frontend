@@ -5,9 +5,13 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
   },
-  scrollView: {
+  imagesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  imageContainer: {
+    width: "33.33%",
+    aspectRatio: 1,
   },
 });
 
