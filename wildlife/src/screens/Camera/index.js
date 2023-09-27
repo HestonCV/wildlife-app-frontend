@@ -23,6 +23,11 @@ const Camera = () => {
       body: JSON.stringify(postData),
     });
     const data = await response.json();
+    if (data.status === "success") {
+      setName("");
+      setDescription("");
+      setCameraToken("");
+    }
     console.log(JSON.stringify(data));
   };
 
